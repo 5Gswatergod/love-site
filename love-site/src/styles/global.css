@@ -1,0 +1,35 @@
+@import "tailwindcss";
+@source "../../index.html" "../**/*.{ts,tsx,js,jsx}";
+
+@theme {
+    --color-bg-start: #0b1026;
+    /* deep space */
+    --color-bg-end: #2a1f5e;
+    /* purple night */
+}
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+body {
+    color: theme(colors.slate.200);
+    background: linear-gradient(135deg, var(--color-bg-start), var(--color-bg-end));
+}
+
+.glow-card {
+    box-shadow:
+        0 0 0 1px color-mix(in oklab, theme(colors.fuchsia.400) 25%, transparent),
+        0 10px 30px color-mix(in oklab, theme(colors.blue.600) 15%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
