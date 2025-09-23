@@ -2,6 +2,7 @@ import Section from '../components/common/Section';
 import ProgressDots from '../components/common/ProgressDots';
 import { quiz } from '../data/quiz';
 import { useLocalStorage } from '../hooks/useLocalStorage';
+import { Link } from 'react-router-dom';
 
 export default function Quiz(){
   const [answers, setAnswers] = useLocalStorage<number[]>("quiz-answers", Array(quiz.length).fill(-1));
@@ -37,10 +38,23 @@ export default function Quiz(){
 
         <div className="flex items-center justify-between pt-2">
           <ProgressDots current={Math.min(correctCount, quiz.length)} total={quiz.length} />
-          <a href={canUnlock? '/final' : '#'} aria-disabled={!canUnlock}
-             className={`px-4 py-2 rounded-full transition ${canUnlock? 'bg-indigo-500/40 hover:bg-indigo-500/60' : 'bg-white/10 cursor-not-allowed'}`}>
-            {canUnlock? '解鎖最終告白頁' : '再答對幾題就能解鎖！'}
-          </a>
+          {canUnlock ? (
+            <Link
+              to="/final"
+              className="px-4 py-2 rounded-full transition bg-indigo-500/40 hover:bg-indigo-500/60"
+            >
+              解鎖最終告白頁
+            </Link>
+          ) : (
+            <button
+              type="button"
+              disabled
+              className="px-4 py-2 rounded-full bg-white/10 cursor-not-allowed"
+              aria-disabled="true"
+            >
+              再答對幾題就能解鎖！
+            </button>
+          )}
         </div>
       </div>
     </Section>

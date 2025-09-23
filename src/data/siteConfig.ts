@@ -7,16 +7,16 @@ export type SiteConfig = {
 };
 
 export const siteConfig: SiteConfig = {
-  herName: '奶昔',
+  herName: '可愛嘟小朋友',
   theme: 'starry',
   startDate: '2023-10-04',
   nextDate: '2025-12-14',
   nav: [
-    { label: 'Home', to: '/' },
-    { label: 'Timeline', to: '/timeline' },
-    { label: 'Quiz', to: '/quiz' },
-    { label: 'Game', to: '/game' },
-    { label: 'Secret', to: '/secret' },
-    { label: 'Final', to: '/final' },
+    { label: '主頁', to: '/' },
+    { label: '時間線', to: '/timeline' },
+    { label: '小測驗', to: '/quiz' },
+    { label: '小遊戲', to: '/game' },
+    { label: '密語', to: '/secret' },
+    { label: '最終告白', to: '/final' },
   ],
 };

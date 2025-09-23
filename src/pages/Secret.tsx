@@ -19,7 +19,7 @@ export default function Secret(){
       ) : (
         <div className="max-w-sm mx-auto">
           <label className="block text-sm mb-2">輸入日期/暱稱/地點其中之一：</label>
-          <input value={input} onChange={e=>setInput(e.target.value)} placeholder="例如：2023/10/04"
+          <input value={input} onChange={e=>setInput(e.target.value)} placeholder="例如：2025/10/10、小豬、天旋地轉"
                  className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/10 focus:outline-none focus:ring-2 focus:ring-fuchsia-400" />
           <div className="mt-3 grid grid-cols-2 gap-2">
             <button onClick={check} className="px-4 py-2 rounded-lg bg-fuchsia-500/40 hover:bg-fuchsia-500/60">解鎖</button>
