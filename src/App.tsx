@@ -10,6 +10,7 @@ import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import Starfield from './components/effects/Starfield';
 import BackToTop from './components/common/BackToTop';
+import KirbyBuddy from './components/common/KirbyBuddy';
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
       </main>
       <Footer />
       <BackToTop />
+      <KirbyBuddy />
     </div>
   );
 }

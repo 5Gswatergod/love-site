@@ -14,9 +14,17 @@ export type Media = {
   autoPlay?: boolean;
   controls?: boolean;
 };
+export type Comment = {
+  id: string;
+  author: string;
+  text: string;
+  time?: string; // ISO string or display text
+};
+
 export type TimelineItem = {
   date: string; title: string; text: string; location?: string;
   media?: Media[]; tags?: string[]; mapUrl?: string;
+  comments?: Comment[];
 };
 
 export const timeline: TimelineItem[] = [
@@ -29,6 +37,19 @@ export const timeline: TimelineItem[] = [
       { type: 'image', src: asset('img/first-hi.webp'), alt: '加上Line！！！' }
     ],
     tags: ['first'],
+  },
+  {
+    date: '2023-12-25',
+    title: '奔現了！',
+    text: '害羞、靦腆、緊張、期待',
+    location: '高雄 · 夢時代',
+    media: [
+      // 照片（兩張）
+      { type: 'image', src: asset('img/firsts-date-1.webp'), alt: '到高雄啦～' },
+      { type: 'image', src: asset('img/firsts-date-2.webp'), alt: '我們一起逛首飾' },
+      { type: 'image', src: asset('img/firsts-date-3.webp'), alt: '單手開車！帥吧～嘿嘿' },
+    ],
+    tags: ['date','first'],
   },
   {
     date: '2025-07-17',
@@ -44,7 +65,7 @@ export const timeline: TimelineItem[] = [
         type: 'video',
         src: asset('vid/yida-1.mp4'),
         caption: '在鬼船排隊的妳，真的好可愛',
-        poster: asset('img/yida-1-poster.webp'),
+        poster: asset('img/yida-1-poster.png'),
         controls: true,
         muted: true,
         loop: true,
@@ -55,7 +76,18 @@ export const timeline: TimelineItem[] = [
         type: 'video',
         src: asset('vid/yida-2.mp4'),
         caption: '看我們玩懸浮球',
-        poster: asset('img/yida-2-poster.webp'),
+        poster: asset('img/yida-2-poster.png'),
+        controls: true,
+        muted: true,
+        loop: true,
+        playsInline: true,
+        autoPlay: false,
+      },
+      {
+        type: 'video',
+        src: asset('vid/yida-3.mp4'),
+        caption: '續攤',
+        poster: asset('img/yida-3-poster.png'),
         controls: true,
         muted: true,
         loop: true,
@@ -64,6 +96,36 @@ export const timeline: TimelineItem[] = [
       }
     ],
     tags: ['trip','fun'],
+  },
+  {
+    date: '2025-07-18',
+    title: '吃冰淇淋！',
+    text: '炎熱的夏天，甜甜的冰淇淋',
+    location: '高雄 · 冰淇淋',
+    media: [
+      { type: 'video', 
+        src: asset('img/ice-cream.mp4'),
+        caption: '吃冰淇淋的妳，好可愛！',
+        poster: asset('img/ice-cream-poster.png'),
+        controls: true,
+        muted: true,
+        loop: true,
+        playsInline: true,
+        autoPlay: false,
+        alt: '冰淇淋',
+      },
+    ],
+    tags: ['sweet','summer'],
+  },
+  {
+    date: '2025-07-22',
+    title: '第一次收到女友小卡',
+    text: '好開心！',
+    location: '台北',
+    media: [
+      { type: 'image', src: asset('img/card-shark.webp'), alt: '女友小卡' },
+    ],
+    tags: ['first','card'],
   },
   {
     date: '2025-07-31',

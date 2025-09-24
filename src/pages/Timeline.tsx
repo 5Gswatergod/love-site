@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lightbox, { type LightboxItem } from '../components/common/Lightbox';
+import Comments from '../components/common/Comments';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -113,6 +114,12 @@ export default function Timeline(){
                     ))}
                   </div>
                 )}
+
+                {/* Comments (Instagram style) */}
+                <Comments
+                  storageKey={`comments:${t.date || t.title}`}
+                  initial={t.comments ?? []}
+                />
 
                 {t.mapUrl && (
                   <a href={t.mapUrl} target="_blank" className="inline-block mt-3 text-xs underline opacity-80">

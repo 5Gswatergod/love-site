@@ -4,6 +4,7 @@ import StarButton from './StarButton';
 import { starBurst } from '../../lib/starBurst';
 import { useAudio } from '../../hooks/useAudio';
 import { audioManifest } from '../../data/audioManifest';
+import ShareButton from './ShareButton';
 
 export default function Navbar(){
   const { pathname } = useLocation();
@@ -45,6 +46,7 @@ export default function Navbar(){
 
           {/* Kirby 星星彩蛋按鈕（行動裝置也好點） */}
           <StarButton onClick={fireStars} aria-label="Sprinkle stars" />
+          <ShareButton className="m1-2" />
         </div>
       </nav>
     </header>

@@ -10,8 +10,24 @@ import HeartScene from '../components/effects/HeartScene';
 import PoyoButton from '../components/common/PoyoButton';
 import { gsap } from 'gsap';
 import PlayerBar from '../components/common/PlayerBar';
+import { useMediaSession } from '../hooks/useMediaSession';
+import Celebration from '../components/effects/Celebration';
 
 export default function Final(){
+  const celebRef = useRef<{ burst: () => void; heartBeat: () => void }>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  useEffect(()=>{
+    if(audioRef.current) audioRef.current.volume = 0.8;
+  }, []);
+
+  useMediaSession({
+    audio: audioRef.current,
+    title: 'ˊ祝你愛我愛到天荒地老',
+    artist: '顏人中',
+    album: 'For 可愛腳小朋友',
+    artwork: `${import.meta.env.BASE_URL}assets/img/cover-512.png`,
+  });
+
   const { ready, isPlaying, play, pause, toggle, setVolume, unlock, getTime, error,
           getDuration, seek, getVolume, toggleMuted, setLooping } =
     useAudio(audioManifest.final, { preload: 'auto', loop: false, initialVolume: 1 });
@@ -81,6 +97,7 @@ export default function Final(){
         { scale: 0.8, opacity: 0 },
         { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' }
       );
+      celebRef.current?.burst();
     }
   }, [openHeart]);
 
@@ -133,6 +150,9 @@ export default function Final(){
           <PoyoButton onClick={()=> setOpenHeart(true)}>
             💗 放大查看愛心
           </PoyoButton>
+          <PoyoButton onClick={()=> celebRef.current?.burst()}>
+            🎆 放煙火
+          </PoyoButton>
         </div>
 
         <PlayerBar
@@ -156,7 +176,6 @@ export default function Final(){
             </p>
           ))}
         </div>
-
         <div className="pt-6">
           <Countdown targetDate={new Date('2025-12-14T07:00:00-05:00')} />
         </div>
@@ -193,6 +212,11 @@ export default function Final(){
           <HeartScene />
         </div>
       </Modal>
+      <audio 
+        ref={audioRef} 
+        src={`${import.meta.env.BASE_URL}assets/music/song.mp3`}
+      />
+      <Celebration ref={celebRef} />
     </Section>
   );
 }
