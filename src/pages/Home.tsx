@@ -1,19 +1,24 @@
 import Section from '../components/common/Section';
-import FallingHearts from '../components/effects/FallingHearts';
-import { NavLink } from 'react-router-dom';
+import PoyoButton from '../components/common/PoyoButton';
+import { Link } from 'react-router-dom';
 
 export default function Home(){
   return (
-    <>
-      <FallingHearts />
-      <Section title="給妳的星空" subtitle="Welcome">
-        <p className="leading-relaxed">這是一個只屬於我們的小宇宙。往下走，妳會找到回憶、遊戲、彩蛋，最後——我的心裡話。</p>
-        <div className="mt-6 flex flex-wrap gap-3">
-          <NavLink to="/timeline" className="px-4 py-2 rounded-full bg-indigo-500/30 hover:bg-indigo-500/50">回憶時間軸</NavLink>
-          <NavLink to="/quiz" className="px-4 py-2 rounded-full bg-fuchsia-500/30 hover:bg-fuchsia-500/50">你最了解我嗎？</NavLink>
-          <NavLink to="/game" className="px-4 py-2 rounded-full bg-blue-500/30 hover:bg-blue-500/50">小遊戲</NavLink>
+    <Section title="甜甜主頁" subtitle="Home">
+      <div className="text-center space-y-6">
+        <h1 className="text-3xl md:text-4xl font-extrabold bg-clip-text text-transparent
+                       bg-gradient-to-r from-pink-200 via-fuchsia-200 to-yellow-200 drop-shadow">
+          嗨，小朋友！💖
+        </h1>
+        <p className="text-pink-100/90">
+          這是一個屬於我們的甜甜小宇宙～<br/>
+          點點星光，QQ 按鈕，還有滿滿的愛心。
+        </p>
+        <div className="flex justify-center gap-4">
+          <Link to="/timeline"><PoyoButton>🌸 看時間線</PoyoButton></Link>
+          <Link to="/gallery"><PoyoButton>⭐ 看相簿</PoyoButton></Link>
         </div>
-      </Section>
-    </>
+      </div>
+    </Section>
   );
 }

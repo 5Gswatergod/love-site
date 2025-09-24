@@ -2,34 +2,80 @@
 @source "../../index.html" "../**/*.{ts,tsx,js,jsx}";
 
 @theme {
-    --color-bg-start: #0b1026;
-    /* deep space */
-    --color-bg-end: #2a1f5e;
-    /* purple night */
+    /* Kirby 甜甜色票 */
+    --color-kirby-pink: #ff7aa2;
+    --color-kirby-light: #ffc6d9;
+    --color-kirby-deep: #ff4b82;
+    --color-star-yellow: #ffd166;
+    --color-sky: #8ec5ff;
+    --color-blueberry: #7a8cff;
+    --radius-poyo: 1.25rem;
+    /* 蓬鬆圓角 */
+
+    /* 背景改粉嫩星空 */
+    --color-bg-start: #2b1b4d;
+    /* 夜紫底 */
+    --color-bg-end: #3f246c;
 }
 
-html,
-body,
-#root {
-    height: 100%;
-}
-
+/* 文字顏色稍微調亮 */
 body {
-    color: theme(colors.slate.200);
-    background: linear-gradient(135deg, var(--color-bg-start), var(--color-bg-end));
+    color: theme(colors.slate.100);
+    background:
+        radial-gradient(1000px 420px at 50% -200px, #51308f55, transparent 70%),
+        linear-gradient(135deg, var(--color-bg-start), var(--color-bg-end));
 }
 
+/* QQ 卡片（蓬鬆陰影 + 玻璃感） */
 .glow-card {
+    border-radius: var(--radius-poyo);
+    background: linear-gradient(180deg, #ffffff14, #ffffff08);
+    backdrop-filter: blur(6px);
     box-shadow:
-        0 0 0 1px color-mix(in oklab, theme(colors.fuchsia.400) 25%, transparent),
-        0 10px 30px color-mix(in oklab, theme(colors.blue.600) 15%, transparent);
+        0 6px 18px rgba(255, 122, 162, .18),
+        0 2px 0 0 rgba(255, 255, 255, .12) inset;
+    border: 1px solid rgba(255, 255, 255, .12);
 }
 
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: .001ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .001ms !important;
-        scroll-behavior: auto !important;
+/* 星星亮點 */
+.star-dot {
+    filter: drop-shadow(0 0 8px #ffd166aa);
+}
+
+/* 輕微彈跳（可套在按鈕） */
+@keyframes poyo {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
     }
+
+    50% {
+        transform: translateY(-2px) scale(1.02);
+    }
+}
+
+.poyo {
+    animation: poyo 1.8s ease-in-out infinite;
+}
+
+.btn-poyo {
+    border-radius: 9999px;
+    padding: .6rem 1rem;
+    font-weight: 600;
+    background: linear-gradient(180deg, var(--color-kirby-pink), var(--color-kirby-deep));
+    color: white;
+    box-shadow: 0 8px 0 #b8325f, 0 10px 24px rgba(255, 122, 162, .35);
+    border: 2px solid #ffffff55;
+    transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+}
+
+.btn-poyo:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+}
+
+.btn-poyo:active {
+    transform: translateY(1px);
+    box-shadow: 0 4px 0 #b8325f;
 }

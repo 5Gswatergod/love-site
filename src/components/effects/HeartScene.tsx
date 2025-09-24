@@ -4,30 +4,26 @@ import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 gsap.registerPlugin(MotionPathPlugin);
 
 export default function HeartScene(){
-  const prefersReduced = typeof window !== 'undefined' &&
-    window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   useEffect(()=>{
-    if(prefersReduced) return;
-    const dot = document.querySelector('#heart-dot');
     const path = document.querySelector('#heart-path');
-    if(!dot || !path) return;
+    if(!path) return;
 
-    const tl = gsap.timeline({ repeat: -1, defaults: { ease: 'power1.inOut' } });
-    tl.to(dot, {
-      duration: 6,
-      motionPath: {
-        path: path as SVGPathElement,
-        align: path as SVGPathElement,
-        alignOrigin: [0.5, 0.5],
-        autoRotate: false,
-      }
+    const dots = Array.from(document.querySelectorAll('.heart-dot'));
+    dots.forEach((dot,i)=>{
+      const tl = gsap.timeline({ repeat: -1, defaults: { ease: 'power1.inOut' } });
+      tl.to(dot, {
+        duration: 6 + i*0.8, // 每顆速度略不同
+        motionPath: {
+          path: path as SVGPathElement,
+          align: path as SVGPathElement,
+          alignOrigin: [0.5, 0.5],
+        },
+        delay: i*0.6, // 延遲起跑
+      });
     });
 
-    return () => {
-      tl.kill();
-    };
-  }, [prefersReduced]);
+    return ()=> gsap.globalTimeline.clear();
+  },[]);
 
   return (
     <div className="relative">
@@ -38,8 +34,8 @@ export default function HeartScene(){
       >
         <defs>
           <linearGradient id="g1" x1="0" x2="1">
-            <stop offset="0%" stopColor="#a78bfa"/>
-            <stop offset="100%" stopColor="#f0abfc"/>
+            <stop offset="0%" stopColor="#ffc6d9"/>
+            <stop offset="100%" stopColor="#ffd166"/>
           </linearGradient>
         </defs>
 
@@ -48,12 +44,17 @@ export default function HeartScene(){
           d="M340,470 C180,380 80,280 80,180 C80,110 132,60 198,60 C252,60 292,92 340,150 C388,92 428,60 482,60 C548,60 600,110 600,180 C600,280 500,380 340,470 Z"
           fill="none"
           stroke="url(#g1)"
-          strokeWidth="2"
+          strokeWidth="3"
+          opacity="0.95"
         />
-        <g id="heart-dot" transform="translate(340 470)">
-          <circle r="5" fill="#e9d5ff" />
-          <circle r="12" fill="none" stroke="#e9d5ff" opacity=".35" />
-        </g>
+
+        {/* 多顆星星 */}
+        {['#ffe4ec','#ffd166','#ffc6d9','#fbbf24','#f472b6'].map((c,i)=>(
+          <g key={i} className="heart-dot" transform="translate(340 470)">
+            <circle r="6" fill={c} />
+            <circle r="12" fill="none" stroke={c} opacity=".4" />
+          </g>
+        ))}
       </svg>
     </div>
   );

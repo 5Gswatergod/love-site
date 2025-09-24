@@ -1,6 +1,7 @@
 import { Routes, Route, NavLink } from 'react-router-dom';
 import Home from './pages/Home';
 import Timeline from './pages/Timeline';
+import Gallery from './pages/Gallery';
 import Quiz from './pages/Quiz';
 import Game from './pages/Game';
 import Secret from './pages/Secret';
@@ -18,6 +19,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home/>} />
           <Route path="/timeline" element={<Timeline/>} />
+          <Route path="/gallery" element={<Gallery/>} />
           <Route path="/quiz" element={<Quiz/>} />
           <Route path="/game" element={<Game/>} />
           <Route path="/secret" element={<Secret/>} />

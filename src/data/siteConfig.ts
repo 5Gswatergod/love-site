@@ -14,6 +14,7 @@ export const siteConfig: SiteConfig = {
   nav: [
     { label: '主頁', to: '/' },
     { label: '時間線', to: '/timeline' },
+    { label: '相簿', to: '/gallery' },
     { label: '小測驗', to: '/quiz' },
     { label: '小遊戲', to: '/game' },
     { label: '密語', to: '/secret' },

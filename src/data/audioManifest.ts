@@ -1,6 +1,11 @@
-// audioManifest.ts
+import { publicUrl } from '../lib/publicUrl';
+
 export const audioManifest = {
-  final: new URL('../assets/music/your-song.mp3', import.meta.url).href,
-  click: new URL('../assets/sfx/click.mp3', import.meta.url).href,
-  pop:   new URL('../assets/sfx/pop.mp3', import.meta.url).href,
+  // m4a + mp3 fallback
+  final: [
+    publicUrl('assets/music/song.m4a'),
+    publicUrl('assets/music/song.mp3'),
+  ],
+  click: publicUrl('assets/sfx/click.mp3'),
+  pop:   publicUrl('assets/sfx/pop.mp3'),
 };
