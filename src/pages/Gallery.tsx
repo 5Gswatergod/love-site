@@ -44,10 +44,6 @@ export default function GalleryPage(){
 
       <div className="space-y-10">
         {groups.map(group => {
-          const items: LightboxItem[] = group.items.map(it => ({
-            src: it.src, alt: it.alt, caption: it.caption
-          }));
-
           return (
             <section key={group.id}>
               <h3 className="text-lg md:text-xl font-semibold mb-3">
@@ -55,27 +51,49 @@ export default function GalleryPage(){
                 <span className="ml-2 text-xs opacity-70">({group.items.length})</span>
               </h3>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                {group.items.map((it, i) => (
-                  <button
-                    key={it.src + i}
-                    className="group aspect-square overflow-hidden rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
-                    onClick={() => openBox(items, i)}
-                  >
-                    <img
-                    src={it.src}
-                    alt={it.alt ?? ''}
-                    loading="lazy"
-                    onError={(e)=>{
-                      (e.currentTarget as HTMLImageElement).src =
-                        new URL('../assets/img/placeholder.webp', import.meta.url).href;
-                    }}
-                    className="h-full w-full object-cover rounded-[1.25rem] border border-white/20
-                              transition-transform duration-300 group-hover:scale-105"
-                  />
-                  </button>
-                ))}
-              </div>
+              {(() => {
+                // Normalize once per group for Lightbox
+                const normalized: LightboxItem[] = group.items.map((gi: any) =>
+                  gi.type === 'video'
+                    ? { type: 'video', src: gi.src, poster: gi.poster, caption: gi.caption, loop: gi.loop, muted: gi.muted }
+                    : { type: 'image', src: gi.src, alt: gi.alt ?? '', caption: gi.caption }
+                );
+
+                return (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                    {group.items.map((it: any, i: number) => {
+                      const isVideo = it.type === 'video';
+                      const thumb = isVideo ? (it.poster ?? '/assets/img/placeholder.webp') : it.src;
+                      const alt = isVideo ? (it.caption ?? '影片') : (it.alt ?? '');
+                      return (
+                        <button
+                          key={`${it.src}-${i}`}
+                          className="group aspect-square overflow-hidden rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-fuchsia-400 relative"
+                          onClick={() => openBox(normalized, i)}
+                          aria-label={it.caption ?? (isVideo ? '播放影片' : '查看圖片')}
+                        >
+                          <img
+                            src={thumb}
+                            alt={alt}
+                            loading="lazy"
+                            onError={(e)=>{ (e.currentTarget as HTMLImageElement).src = '/assets/img/placeholder.webp'; }}
+                            className="h-full w-full object-cover rounded-[1.25rem] border border-white/20 transition-transform duration-300 group-hover:scale-105"
+                          />
+                          {isVideo && (
+                            <span className="absolute inset-0 grid place-items-center">
+                              <span className="rounded-full bg-black/40 p-3 border border-white/30">
+                                <svg viewBox="0 0 24 24" className="w-6 h-6 text-white" fill="currentColor" aria-hidden>
+                                  <path d="M8 5v14l11-7z" />
+                                </svg>
+                              </span>
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
             </section>
           );
         })}

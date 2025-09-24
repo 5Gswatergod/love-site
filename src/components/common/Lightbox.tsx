@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 
-export type LightboxItem = { src: string; alt?: string; caption?: string };
+export type LightboxItem =
+  | { type: 'image'; src: string; alt?: string; caption?: string }
+  | { type: 'video'; src: string; poster?: string; caption?: string; loop?: boolean; muted?: boolean };
 
 export default function Lightbox({
   open, items, index, onClose, onNav,
@@ -32,12 +34,25 @@ export default function Lightbox({
     <div
       ref={dialogRef}
       className="fixed inset-0 z-[100] bg-black/80 backdrop-blur flex items-center justify-center p-4"
-      role="dialog" aria-modal="true" aria-label="Photo viewer"
+      role="dialog" aria-modal="true" aria-label="Media viewer"
       onClick={(e)=>{ if(e.target === dialogRef.current) onClose(); }}
     >
       <div className="max-w-5xl w-full">
-        <div className="relative bg-black/40 rounded-xl overflow-hidden border border-white/10">
-          <img src={it.src} alt={it.alt ?? ''} className="w-full max-h-[78vh] object-contain" />
+        <div className="relative bg-black/40 rounded-xl overflow-hidden border border-white/10 flex items-center justify-center">
+          {it.type === 'image' ? (
+            <img src={it.src} alt={it.alt ?? ''} className="w-full max-h-[78vh] object-contain" />
+          ) : (
+            <video
+              src={it.src}
+              poster={it.poster}
+              className="w-full max-h-[78vh] object-contain"
+              controls
+              autoPlay
+              loop={it.loop ?? true}
+              muted={it.muted ?? true}
+              playsInline
+            />
+          )}
           {it.caption && <div className="absolute bottom-0 left-0 right-0 bg-black/40 text-center px-4 py-2 text-sm">{it.caption}</div>}
           <button
             onClick={onClose}

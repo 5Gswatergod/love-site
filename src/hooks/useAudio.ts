@@ -98,5 +98,21 @@ export function useAudio(
     try { await a.play(); a.pause(); a.currentTime = 0; } catch { /* ignore */ }
   };
 
-  return { isPlaying, ready, error, play, pause, toggle, setVolume, unlock };
+  return { 
+    isPlaying, ready, error, play, pause, toggle, setVolume, unlock,
+    getTime: () => audioRef.current?.currentTime ?? 0,
+    getDuration: () => audioRef.current?.duration ?? 0,
+    seek: (sec: number) => {
+      const a = audioRef.current; if (!a) return;
+      const dur = isFinite(a.duration) ? a.duration : Infinity;
+      a.currentTime = Math.max(0, Math.min(sec, dur));
+    },
+    getVolume: () => audioRef.current?.volume ?? 1,
+    setMuted: (m: boolean) => { const a = audioRef.current; if (a) a.muted = m; },
+    toggleMuted: () => {
+      const a = audioRef.current; if (!a) return;
+      a.muted = !a.muted;
+    },
+    setLooping: (b: boolean) => { const a = audioRef.current; if (a) a.loop = b; },
+  };
 }
