@@ -9,6 +9,7 @@ import Final from './pages/Final';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import Starfield from './components/effects/Starfield';
+import BackToTop from './components/common/BackToTop';
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <BackToTop />
     </div>
   );
 }
