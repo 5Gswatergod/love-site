@@ -41,8 +41,20 @@ export default function Timeline(){
           media: r.media_url
             ? [
                 r.media_type === 'video'
-                  ? { type: 'video', src: r.media_url, poster: undefined, controls: true, playsInline: true }
-                  : { type: 'image', src: r.media_url }
+                  ? {
+                      type: 'video' as 'video',
+                      src: r.media_url,
+                      poster: undefined,
+                      controls: true,
+                      playsInline: true,
+                      muted: false,
+                      loop: false,
+                      autoPlay: false,
+                    }
+                  : {
+                      type: 'image' as 'image',
+                      src: r.media_url,
+                    }
               ]
             : []
         }));

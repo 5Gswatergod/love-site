@@ -2,7 +2,7 @@
 import { supabase } from '../lib/supabase';
 import { timeline } from '../data/timeline';
 
-const BUCKET = import.meta.env.VITE_SUPABASE_BUCKET_TIMELINE || 'timeline';
+// const BUCKET = import.meta.env.VITE_SUPABASE_BUCKET_TIMELINE || 'timeline';
 
 // 小工具：把相對路徑轉為絕對 URL
 function toAbsoluteURL(src: string): string {
@@ -48,11 +48,11 @@ function normalizeDate(input: unknown): string | null {
 }
 
 // 下載並回傳 Blob（圖片/影片）
-async function fetchBlob(u: string): Promise<Blob> {
-  const res = await fetch(u, { mode: 'cors' });
-  if (!res.ok) throw new Error(`fetch failed: ${u} ${res.status}`);
-  return await res.blob();
-}
+// async function fetchBlob(u: string): Promise<Blob> {
+//   const res = await fetch(u, { mode: 'cors' });
+//   if (!res.ok) throw new Error(`fetch failed: ${u} ${res.status}`);
+//   return await res.blob();
+// }
 
 function sleep(ms: number){ return new Promise(r=>setTimeout(r, ms)); }
 
