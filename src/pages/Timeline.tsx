@@ -5,6 +5,8 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lightbox, { type LightboxItem } from '../components/common/Lightbox';
 import Comments from '../components/common/Comments';
+import { supabase } from '../lib/supabase';
+import TimelineUploader from '../components/common/TimelineUploader';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -13,6 +15,51 @@ export default function Timeline(){
   const [lbOpen, setLbOpen] = useState(false);
   const [lbItems, setLbItems] = useState<LightboxItem[]>([]);
   const [lbIndex, setLbIndex] = useState(0);
+
+  // 合併本地 timeline 與雲端 timeline_events 後的資料
+  const [rows, setRows] = useState<typeof timeline>([]);
+
+  const load = async () => {
+    // 先用本地資料
+    let merged = [...timeline];
+
+    // 取雲端資料並轉成目前渲染所需格式
+    if (supabase) {
+      const { data, error } = await supabase
+        .from('timeline_events')
+        .select('title, description, date, media_url, media_type')
+        .order('date', { ascending: true });
+
+      if (!error && Array.isArray(data)) {
+        const cloud = data.map((r) => ({
+          title: r.title || '',
+          text: r.description || '',
+          date: r.date || '',
+          location: undefined,
+          mapUrl: undefined,
+          comments: [],
+          media: r.media_url
+            ? [
+                r.media_type === 'video'
+                  ? { type: 'video', src: r.media_url, poster: undefined, controls: true, playsInline: true }
+                  : { type: 'image', src: r.media_url }
+              ]
+            : []
+        }));
+        merged = [...merged, ...cloud];
+      }
+    }
+
+    // 去重（以 title+date 當 key）並依日期排序
+    const key = (x: any) => `${x.title}|${x.date}`;
+    const map = new Map<string, any>();
+    merged.forEach((x) => map.set(key(x), x));
+    const sorted = Array.from(map.values()).sort((a, b) => String(a.date).localeCompare(String(b.date)));
+    setRows(sorted);
+  };
+
+  // 初始載入
+  useEffect(() => { load(); }, []);
 
   useEffect(()=>{
     const ctx = gsap.context(()=>{
@@ -34,8 +81,9 @@ export default function Timeline(){
   return (
     <>
       <Section title="我們的時間軸" subtitle="Timeline">
+        <TimelineUploader onCreated={load} />
         <div ref={wrapRef} className="grid gap-4">
-          {timeline.map((t,i)=> {
+          {rows.map((t,i)=> {
             const pics: (LightboxItem & { alt?: string })[] = (t.media ?? []).filter(m => m.type === 'image').map(m => ({
               type: 'image',
               src: m.src,
