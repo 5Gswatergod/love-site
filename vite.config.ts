@@ -8,7 +8,7 @@ const repoBase = '/love-site/';
 const base = process.env.GITHUB_PAGES ? repoBase : '/';
 
 export default defineConfig({
-  base: "/",
+  base: base,
   plugins: [
     react(),
     tailwindcss(),
