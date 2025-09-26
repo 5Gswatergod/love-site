@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 // Use dynamic base: GH Pages needs "/<repo>/", local dev/build can use "/"
-const repoBase = '/';
+const repoBase = '/love-site/';
 const base = process.env.GITHUB_PAGES ? repoBase : '/';
 
 export default defineConfig({
