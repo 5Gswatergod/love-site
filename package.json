@@ -5,6 +5,7 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
+    "gen:icons": "node scripts/gen-icons.mjs",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
