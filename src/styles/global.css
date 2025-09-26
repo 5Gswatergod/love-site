@@ -103,3 +103,24 @@ body {
     transform: translateY(1px);
     box-shadow: 0 4px 0 #b8325f;
 }
+
+/* 固定元件留出安全區 */
+:root {
+    --sab: env(safe-area-inset-bottom);
+}
+
+body {
+    padding-bottom: max(0px, var(--sab));
+}
+
+/* 標題用 clamp，手機不爆字 */
+.h-hero {
+    font-size: clamp(1.25rem, 6vw, 2rem);
+}
+
+/* H2 級 */
+.h-display {
+    font-size: clamp(1.5rem, 8vw, 3rem);
+}
+
+/* Hero 級 */

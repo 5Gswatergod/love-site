@@ -94,7 +94,7 @@ export default function Timeline(){
     <>
       <Section title="我們的時間軸" subtitle="Timeline">
         <TimelineUploader onCreated={load} />
-        <div ref={wrapRef} className="grid gap-4">
+        <div ref={wrapRef} className="grid gap-4 md:gap-6">
           {rows.map((t,i)=> {
             const pics: (LightboxItem & { alt?: string })[] = (t.media ?? []).filter(m => m.type === 'image').map(m => ({
               type: 'image',
@@ -106,7 +106,7 @@ export default function Timeline(){
             const vids = (t.media ?? []).filter(m => m.type === 'video');
 
             return (
-              <article key={i} className="tl-item glow-card rounded-2xl bg-white/5 p-4">
+              <article key={i} className="tl-item glow-card rounded-xl md:rounded-2xl bg-white/5 p-3 md:p-5">
                 <div className="text-xs opacity-70">{t.date}{t.location? ` • ${t.location}`:''}</div>
                 <h3 className="text-lg font-semibold mt-1">{t.title}</h3>
                 <p className="opacity-90 mt-1">{t.text}</p>
@@ -114,7 +114,7 @@ export default function Timeline(){
                 {pics.length>0 && (
                   pics.length === 1 ? (
                     // 單張：Hero 寬圖（滿版、16:9、hover 微放大）
-                    <div className="mt-3">
+                    <div className="mt-3 md:mt-4">
                       <button
                         className="group block w-full overflow-hidden rounded-xl border border-white/10 bg-white/5"
                         onClick={()=> openLightbox(pics, 0)}
@@ -134,11 +134,11 @@ export default function Timeline(){
                     </div>
                   ) : (
                     // 多張：整齊方格（方形裁切、hover 微放大）
-                    <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                    <div className="mt-3 md:mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
                       {pics.map((p,pi)=> (
                         <button
                           key={p.src}
-                          className="group aspect-square overflow-hidden rounded-xl border border-white/10 bg-white/5 hover:bg-white/10"
+                          className="group aspect-square overflow-hidden rounded-lg md:rounded-xl border border-white/10 bg-white/5 hover:bg-white/10"
                           onClick={()=> openLightbox(pics, pi)}
                           aria-label={`Open ${p.alt ?? 'photo'}`}
                         >
@@ -156,21 +156,23 @@ export default function Timeline(){
                 )}
 
                 {vids.length>0 && (
-                  <div className="mt-3 grid grid-cols-1 gap-3">
+                  <div className="mt-3 md:mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
                     {vids.map((v,vi)=> (
-                      <video
-                        key={vi}
-                        src={v.src}
-                        poster={v.poster}
-                        controls={v.controls}
-                        muted={v.muted}
-                        loop={v.loop}
-                        playsInline={v.playsInline}
-                        autoPlay={v.autoPlay}
-                        className="rounded-lg w-full max-h-80 object-contain bg-black"
-                      >
-                        你的瀏覽器不支援影片播放
-                      </video>
+                      <div key={vi} className="aspect-[4/3] md:aspect-video w-full overflow-hidden rounded-xl bg-black/80">
+                        <video
+                          src={v.src}
+                          poster={v.poster}
+                          controls={v.controls}
+                          muted={v.muted}
+                          loop={v.loop}
+                          playsInline={v.playsInline}
+                          autoPlay={v.autoPlay}
+                          preload="metadata"
+                          className="h-full w-full object-cover"
+                        >
+                          你的瀏覽器不支援影片播放
+                        </video>
+                      </div>
                     ))}
                   </div>
                 )}

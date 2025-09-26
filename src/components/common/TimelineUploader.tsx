@@ -139,9 +139,6 @@ export default function TimelineUploader({ onCreated }: Props) {
       </div>
 
       {err && <p className="text-sm text-rose-300">{err}</p>}
-      <p className="text-xs opacity-70">
-        小提醒：媒體會上傳到 Supabase Storage「timeline」桶，事件寫入 <code>timeline_events</code> 表。
-      </p>
     </div>
   );
 }
