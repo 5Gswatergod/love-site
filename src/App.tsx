@@ -1,4 +1,6 @@
 import { Routes, Route, NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { prefetchTimeline } from './utils/prefetchTimeline';
 import Home from './pages/Home';
 import Timeline from './pages/Timeline';
 import Gallery from './pages/Gallery';
@@ -14,6 +16,14 @@ import KirbyBuddy from './components/common/KirbyBuddy';
 
 export default function App() {
   return (
+    useEffect(() => {
+      const idel = (cb: () => void) => {
+        const ric = window.requestIdleCallback || ((f:Function) => setTimeout(f, 600));
+        ric(() => cb());
+      };
+      // 預載時間線頁面（因為比較大）
+      idel(()=> {prefetchTimeline(); });
+    }, []),
     <div className="min-h-dvh flex flex-col overflow-x-hidden">
       <Starfield />
       <Navbar />

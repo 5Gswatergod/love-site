@@ -5,6 +5,7 @@ import { starBurst } from '../../lib/starBurst';
 import { useAudio } from '../../hooks/useAudio';
 import { audioManifest } from '../../data/audioManifest';
 import ShareButton from './ShareButton';
+import { prefetchTimeline } from '../../utils/prefetchTimeline';
 
 export default function Navbar(){
   const { pathname } = useLocation();
@@ -30,6 +31,8 @@ export default function Navbar(){
               <li key={l.to}>
                 <NavLink
                   to={l.to}
+                  onMouseEnter={l.to === '/timeline' ? prefetchTimeline : undefined}
+                  onFocus={l.to === '/timeline' ? prefetchTimeline : undefined}
                   className={({isActive}) =>
                     `px-3 py-1.5 rounded-full transition
                      ${isActive
