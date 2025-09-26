@@ -37,12 +37,20 @@ export default defineConfig({
           {
             urlPattern: ({ request }) => request.destination === 'image',
             handler: 'CacheFirst',
-            options: { cacheName: 'images', expiration: { maxEntries: 120, maxAgeSeconds: 60 * 60 * 24 * 30 } }
+            options: {
+              cacheName: 'images',
+              expiration: { maxEntries: 120, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              cacheableResponse: { statuses: [200] }
+            }
           },
           {
             urlPattern: ({ url }) => /\.(mp3|m4a)$/i.test(url.pathname),
             handler: 'CacheFirst',
-            options: { cacheName: 'audio', expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 30 } }
+            options: {
+              cacheName: 'audio',
+              expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              cacheableResponse: { statuses: [200] }
+            }
           }
         ]
       },
@@ -50,4 +58,17 @@ export default defineConfig({
       devOptions: { enabled: process.env.SW_DEV === 'true' }
     })
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+          gsap: ['gsap'],
+          supabase: ['@supabase/supabase-js'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1000,
+  }
 })

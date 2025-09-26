@@ -32,8 +32,8 @@ export default function App() {
           <Route path="/" element={<Home/>} />
           <Route path="/timeline" element={<Timeline/>} />
           <Route path="/gallery" element={<Gallery/>} />
-          <Route path="/quiz" element={<Quiz/>} />
           <Route path="/game" element={<Game/>} />
+          <Route path="/quiz" element={<Quiz/>} />
           <Route path="/secret" element={<Secret/>} />
           <Route path="/final" element={<Final/>} />
           <Route path="*" element={<div className="text-center py-20">404 Not Found. <NavLink to="/" className="underline">Go Home</NavLink></div>} />

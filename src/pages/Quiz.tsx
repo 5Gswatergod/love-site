@@ -36,8 +36,8 @@ export default function QuizPage(){
 
         <div className="pt-4">
           {canUnlock ? (
-            <Link to="/final">
-              <PoyoButton>💌 解鎖最終告白頁</PoyoButton>
+            <Link to="/secret" onClick={()=>alert('答對 3 題以上就能解鎖囉！')} >
+              <PoyoButton>去打開密語吧～</PoyoButton>
             </Link>
           ) : (
             <button

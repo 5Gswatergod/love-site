@@ -29,7 +29,7 @@ export default function Game(){
           <div key={b.id} className="bg-white/5 rounded-lg px-3 py-2 text-center">{b.text}</div>
         ))}
       </div>
-      {done && <p className="mt-6 text-center text-emerald-300">太棒了！回到上方導覽，去 Final 接收驚喜吧！</p>}
+      {done && <p className="mt-6 text-center text-emerald-300">太棒了！回到上方導覽，往小測驗去吧！</p>}
     </Section>
   );
 }
